@@ -1,0 +1,12 @@
+.van-tabs__nav {
+  background-color: #1985FF !important;
+}
+
+.van-tab .van-ellipsis {
+  font-size: 30rpx;
+  color: #fff !important;
+}
+
+.van-tabs__line {
+  background-color: #fff !important;
+}

@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/data/index",
+    "pages/control/index",
+    "pages/user/index"
+  ],
+  "window": {
+    "backgroundColor": "#fff",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1985FF",
+    "navigationBarTitleText": "红旗智慧农业物联网",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh":true,
+    "onReachBottomDistance":50
+    
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#000000",
+    "selectedColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text":"首页",
+        "iconPath":"./images/tabBar/white/index.png",
+        "selectedIconPath":"./images/tabBar/blue/index.png"
+      },
+      {
+        "pagePath": "pages/data/index",
+        "text":"数据分析",
+        "iconPath":"./images/tabBar/white/data.png",
+        "selectedIconPath":"./images/tabBar/blue/data.png"
+      },
+      {
+        "pagePath": "pages/control/index",
+        "text":"控制中心",
+        "iconPath":"./images/tabBar/white/control.png",
+        "selectedIconPath":"./images/tabBar/blue/control.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text":"我的",
+        "iconPath":"./images/tabBar/white/user.png",
+        "selectedIconPath":"./images/tabBar/blue/user.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

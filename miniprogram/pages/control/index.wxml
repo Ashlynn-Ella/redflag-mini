@@ -1,0 +1,121 @@
+<!--pages/control/index.wxml-->
+<view>
+  <van-tabs animated active="{{1}}" bind:change="tabChange">
+    <van-tab title="设备控制"></van-tab>
+    <van-tab title="水肥控制"></van-tab>
+  </van-tabs>
+  <view class="tab1-inner" wx:if="{{active===0}}">
+    <view class="select-box">
+      <van-dropdown-menu overlay="{{true}}" style="width:66%">
+        <van-dropdown-item value="{{ house }}" options="{{ houseList }}" />
+        <van-dropdown-item value="{{ away }}" options="{{ aways }}" />
+      </van-dropdown-menu>
+    </view>
+    <view class="control-device container flex-btw">
+      <view class="device-item flex-btw" bindtap="detailOpen">
+        <view class="left flex-clumn">
+          <image src="/images/data/lighting.png" />
+          <text>紧急停止</text>
+        </view>
+        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
+      </view>
+      <view class="device-item flex-btw">
+        <view class="left flex-clumn">
+          <image src="/images/data/lighting.png" />
+          <text>紧急停止</text>
+        </view>
+        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
+      </view>
+      <view class="device-item flex-btw">
+        <view class="left flex-clumn">
+          <image src="/images/data/lighting.png" />
+          <text>紧急停止</text>
+        </view>
+        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
+      </view>
+      <view class="device-item flex-btw">
+        <view class="left flex-clumn">
+          <image src="/images/data/lighting.png" />
+          <text>紧急停止</text>
+        </view>
+        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
+      </view>
+    </view>
+  </view>
+  <view class="tab2-inner container" wx:else>
+    <view class="banner-box flex-clumn">
+      <view class="mb-40">
+        <text>水肥一体化灌溉设备</text>
+      </view>
+      <image src="/images/control/water.png" />
+      <view class="vul-box flex-btw">
+        <view class="vul-ph flex-clumn">
+          <view class="mb-30">
+            <text class="vul-blue">7</text>
+          </view>
+          <text>PH参数值</text>
+        </view>
+        <view class="vul-ec flex-clumn">
+          <view class="mb-30">
+            <text class="vul-blue">0.0μs/cm</text>
+          </view>
+          <text>EC参数值</text>
+        </view>
+      </view>
+    </view>
+    <view class="btn-box flex-btw mt-40">
+      <text>自动模式</text>
+      <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
+    </view>
+    <view class="input-list mt-40">
+      <van-cell title="氮肥">
+        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
+      </van-cell>
+      <van-cell title="磷肥">
+        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
+      </van-cell>
+      <van-cell title="钾肥">
+        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
+      </van-cell>
+      <van-cell title="微量元素">
+        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
+      </van-cell>
+    </view>
+    <view class="btn-wrapper mt-40">标准配比</view>
+  </view>
+  <view class="popup">
+    <van-popup
+      show="{{ show }}"
+      round
+      closeable
+      position="bottom"
+      custom-style="height: 50%"
+      bind:close="onClose"
+    >
+      <view class="popup-box">
+        <view class="title mb-30">
+          <view class="mb-40">
+            <text class="title01">环流风机-01</text>
+          </view>
+          <view class="mb-20">
+            <text>定时：永不重复 - 时间 00：00 - 开启设备30分钟</text>
+          </view>
+          <view class="mb-20">
+            <text>策略：当空气温度持续5分钟大于10.00摄氏度时启动</text>
+          </view>
+        </view>
+        <view class="steps-box">
+          <text class="title01">日志记录</text>
+          <view class="step-box">
+            <van-steps
+              steps="{{ steps }}"
+              active="{{ active }}"
+              direction="vertical"
+              active-color="#1985FF"
+            />
+          </view>
+        </view>
+      </view>
+    </van-popup>
+  </view>
+</view>

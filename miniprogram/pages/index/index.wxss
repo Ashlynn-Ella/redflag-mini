@@ -1,0 +1,81 @@
+/**index.wxss**/
+
+page {
+  width: 100%;
+  height: 100%;
+  background: #FEFEFE;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.view-img {
+  width: 100%;
+  background: linear-gradient(180deg, #1985FF 0%, rgba(90, 211, 252, 0) 100%);
+  padding: 30rpx;
+}
+
+.title {
+  font-size: 30rpx;
+  color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.video-box {
+  width: 100%;
+  height: 325rpx;
+  background: #000000;
+  box-shadow: 1px 2px 10px 3px rgba(0, 0, 2, 0.05);
+  border-radius: 12rpx;
+  opacity: 0.35;
+}
+
+.tab1-item {
+  width: 330rpx;
+  height: 190rpx;
+  background: #F9F9F9;
+  border-radius: 12rpx;
+}
+
+.tab1-item .num {
+  color: #57A5FD;
+  font-size: 40rpx;
+}
+
+.roomtemp {
+  font-size: 28rpx;
+}
+
+.img-box image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.tab2 {
+  width: 100%;
+  height: 320rpx;
+  padding: 60rpx;
+  background: #F9F9F9;
+  border-radius: 12rpx;
+}
+
+.tab2-item {
+  min-width: 45%;
+  text-align: left;
+  font-size: 28rpx;
+  margin-bottom: 50rpx;
+}
+.tab2-item text:last-child{
+  color: #57A5FD;
+}
+
+.tab2-item image{
+  width: 34rpx;
+  height: 34rpx;
+  vertical-align: middle;
+}

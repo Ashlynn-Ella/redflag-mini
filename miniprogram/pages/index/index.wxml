@@ -1,0 +1,118 @@
+<!-- index.wxml -->
+<view>
+  <view class="view-img">
+    <view class="title">视频监控</view>
+    <view class="video-box"></view>
+  </view>
+  <view class="tab-box" style="width:100%">
+    <van-tabs animated active="{{active}}">
+      <van-tab title="时实气象">
+        <view class="container tab1 flex-btw">
+          <view class="tab1-item flex-center mb-30" wx:for="{{ wetherData }}" wx:key="index">
+            <view class="img-box flex-clumn mr-40">
+              <text class="roomtemp mb-10">{{item.text}}</text>
+              <image src="{{item.imgUrl}}" />
+            </view>
+            <text class="num">30℃</text>
+          </view>
+        </view>
+      </van-tab>
+      <van-tab title="基本内容">
+        <view class="container">
+          <view class="tab2 flex-btw">
+            <view class="tab2-item">
+              <text class="mr-30">园区面积</text>
+              <text>500亩</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">大田地块</text>
+              <text>200亩</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">连栋温室</text>
+              <text>2栋</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">作物种类</text>
+              <text>3种</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">大棚温室</text>
+              <text>30栋</text>
+            </view>
+          </view>
+        </view>
+      </van-tab>
+      <van-tab title="作物信息">
+        <view class="container">
+          <view class="tab2 mb-30 flex-btw">
+            <view class="tab2-item flex">
+              <text class="mr-30">西红柿</text>
+              <image src="/images/index/tomato.png" />
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">所属棚室:</text>
+              <text>A1棚室</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">生长天数:</text>
+              <text>53天</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">规模面积:</text>
+              <text>200亩</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">种植日期:</text>
+              <text>2020-7-10</text>
+            </view>
+          </view>
+          <view class="tab2 mb-30 flex-btw">
+            <view class="tab2-item flex">
+              <text class="mr-30">马铃薯</text>
+              <image src="/images/index/potato.png" />
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">所属棚室:</text>
+              <text>A2棚室</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">生长天数:</text>
+              <text>60天</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">规模面积:</text>
+              <text>200亩</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">种植日期:</text>
+              <text>2020-7-10</text>
+            </view>
+          </view>
+          <view class="tab2 mb-30 flex-btw">
+            <view class="tab2-item flex">
+              <text class="mr-30">大白菜</text>
+              <image src="/images/index/caba.png" />
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">所属棚室:</text>
+              <text>A3棚室</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">生长天数:</text>
+              <text>120天</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">规模面积:</text>
+              <text>100亩</text>
+            </view>
+            <view class="tab2-item">
+              <text class="mr-30">种植日期:</text>
+              <text>2020-7-10</text>
+            </view>
+          </view>
+        </view>
+      </van-tab>
+    </van-tabs>
+  </view>
+</view>

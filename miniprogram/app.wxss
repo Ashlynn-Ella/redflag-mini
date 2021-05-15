@@ -1,0 +1,110 @@
+/**app.wxss**/
+
+.container {
+  box-sizing: border-box;
+  padding: 30rpx;
+}
+
+button {
+  background: initial;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button::after {
+  border: none;
+}
+
+
+page {
+  background: #FEFEFE;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+view,
+text,
+button {
+  box-sizing: border-box;
+}
+
+/* 改变vant的样式 */
+.van-overlay {
+  background-color: var(--overlay-background-color, rgba(0, 0, 0, .1)) !important;
+}
+
+.van-dropdown-menu {
+  background-color: #fefefe !important;
+  box-shadow: none !important;
+}
+
+/* 自定义全局样式 */
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-btw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.flex-btw-nowrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-clumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 字体颜色 */
+.vul-blue{
+  color: #1985FF;
+}
+
+.mr-40 {
+  margin-right: 40rpx;
+}
+
+.mr-30 {
+  margin-right: 30rpx;
+}
+
+.mb-30 {
+  margin-bottom: 30rpx;
+}
+
+.mb-10 {
+  margin-bottom: 10rpx;
+}
+
+.mb-20 {
+  margin-bottom: 20rpx;
+}
+.mb-40 {
+  margin-bottom: 40rpx;
+}
+
+.mt-40 {
+  margin-top: 40rpx;
+}
+
+.mt-60 {
+  margin-top: 60rpx;
+}

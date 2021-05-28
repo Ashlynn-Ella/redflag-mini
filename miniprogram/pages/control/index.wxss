@@ -21,7 +21,7 @@
 }
 
 .popup-box {
-  padding: 60rpx 20rpx 0;
+  padding: 50rpx 20rpx 0;
 }
 
 .popup-box .title view {
@@ -32,8 +32,9 @@
   font-size: 36rpx;
   font-weight: 500;
 }
+
 .step-box {
-  height: 250rpx;
+  height: 280rpx;
   overflow-y: scroll;
 }
 
@@ -50,8 +51,34 @@
   margin-bottom: 75rpx;
 }
 
+.title {
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+
+.banner-box .open-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.banner-box .open-btn image {
+  width: 50rpx;
+  height: 50rpx;
+  margin-bottom: 0;
+}
+
+.banner-box .open-btn:hover {
+  background-color: none;
+}
+
 .vul-box {
   width: 100%;
+}
+
+.close {
+  color: #999999;
 }
 
 .vul-ph {
@@ -87,4 +114,17 @@
   border-radius: 50rpx;
   text-align: center;
   line-height: 105rpx;
+}
+
+.open-btn{
+  width: 50rpx;
+  height: 50rpx;
+  position: relative;
+}
+.open-btn image{
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

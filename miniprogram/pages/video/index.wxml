@@ -1,0 +1,9 @@
+<!--pages/video/index.wxml-->
+<view class="video-wrapper">
+  <!-- <van-dropdown-menu overlay="{{false}}">
+    <van-dropdown-item value="{{ value }}" options="{{ seatList }}" bind:change="onCahnge" />
+  </van-dropdown-menu> -->
+  <view class="video-box">
+    <video autoplay src="{{url}}"></video>
+  </view>
+</view>

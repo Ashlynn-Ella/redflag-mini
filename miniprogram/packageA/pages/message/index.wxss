@@ -1,0 +1,23 @@
+/* packageA/pages/message/index.wxss */
+
+.van-tabs__nav {
+  background-color: #F2F2F2 !important;
+}
+
+.van-tabs__line {
+  background-color: #000000 !important;
+}
+
+.mes-item {
+  background: #FFFFFF;
+  box-shadow: 0px 3rpx 10rpx 0px rgba(0, 0, 0, 0.08);
+  border-radius: 12rpx;
+  padding: 30rpx;
+  font-size: 24rpx;
+  color: #9B9B9B;
+}
+
+.mes-hd view text {
+  font-size: 28rpx;
+  color: #000000;
+}

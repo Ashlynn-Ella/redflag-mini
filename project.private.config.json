@@ -27,6 +27,72 @@
         {
           "name": "pages/control/index",
           "pathName": "pages/control/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/user/index",
+          "pathName": "pages/user/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/login/index",
+          "pathName": "packageA/pages/login/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/my/index",
+          "pathName": "packageA/pages/my/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/message/index",
+          "pathName": "packageA/pages/message/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/admin/index",
+          "pathName": "packageA/pages/admin/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/edit/index",
+          "pathName": "packageA/pages/edit/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/add/index",
+          "pathName": "packageA/pages/add/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/video/index",
+          "pathName": "pages/video/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/add/index",
+          "pathName": "packageA/pages/add/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "packageA/pages/edit/index",
+          "pathName": "packageA/pages/edit/index",
           "scene": null
         }
       ]

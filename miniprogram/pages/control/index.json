@@ -9,6 +9,10 @@
     "van-steps": "@vant/weapp/steps/index",
     "van-stepper": "@vant/weapp/stepper/index",
     "van-cell": "@vant/weapp/cell/index",
-    "van-cell-group": "@vant/weapp/cell-group/index"
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-toast": "@vant/weapp/toast/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-overlay": "@vant/weapp/overlay/index"
   }
 }

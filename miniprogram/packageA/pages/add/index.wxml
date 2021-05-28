@@ -1,0 +1,27 @@
+<!--packageA/pages/add/index.wxml-->
+<van-toast id="van-toast" />
+<view class="add-box">
+  <van-cell-group>
+    <van-field
+      model:value="{{ name }}"
+      required
+      clearable
+      label="姓名"
+      placeholder="请输入姓名"
+      bind:click-icon="onClickIcon"
+    />
+    <van-field
+      model:value="{{ username }}"
+      required
+      clearable
+      label="用户名"
+      placeholder="请输入用户名"
+      bind:click-icon="onClickIcon"
+    />
+    <van-field model:value="{{ password }}" type="password" label="密码" placeholder="请输入密码" required />
+    <van-field model:value="{{ confirm }}" type="password" label="确认密码" placeholder="请再次输入密码" required />
+  </van-cell-group>
+  <view class="container">
+    <van-button bind:tap="addUser" size="large" round color="linear-gradient(270deg, #57A5FD 0%, #5AD3FC 100%);">确认</van-button>
+  </view>
+</view>

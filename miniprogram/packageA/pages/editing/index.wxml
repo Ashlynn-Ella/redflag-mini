@@ -1,0 +1,44 @@
+<van-toast id="van-toast" />
+<view class="add-box">
+  <van-cell-group>
+    <view wx:if="{{editname==='0'}}">
+      <van-field model:value="{{ name }}" clearable label="姓名" bind:click-icon="onClickIcon" />
+    </view>
+    <view wx:elif="{{editname==='1'}}">
+      <van-field
+        model:value="{{ password }}"
+        clearable
+        type="password"
+        label="密码"
+        placeholder="请输入密码"
+      />
+      <van-field
+        model:value="{{ confirm }}"
+        clearable
+        type="password"
+        label="确认密码"
+        placeholder="请确认密码"
+      />
+    </view>
+    <view wx:else>
+      <van-radio-group value="{{ radio }}">
+        <van-cell-group>
+          <van-cell title="游客" clickable data-name="1" bind:click="onClick">
+            <van-radio slot="right-icon" name="1" />
+          </van-cell>
+          <van-cell title="管理员" clickable data-name="2" bind:click="onClick">
+            <van-radio slot="right-icon" name="2" />
+          </van-cell>
+        </van-cell-group>
+      </van-radio-group>
+    </view>
+  </van-cell-group>
+  <view class="container" wx:if="{{editname!=='2'}}">
+    <van-button
+      bind:tap="editUser"
+      size="large"
+      round
+      color="linear-gradient(270deg, #57A5FD 0%, #5AD3FC 100%);"
+    >确认</van-button>
+  </view>
+</view>

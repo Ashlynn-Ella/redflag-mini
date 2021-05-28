@@ -1,0 +1,44 @@
+<!--packageA/pages/admin/index.wxml-->
+<view class="admin-box">
+  <van-dialog id="van-dialog" />
+  <van-toast id="van-toast" />
+  <view class="saerch-box flex-btw-nowrap">
+    <view class="search">
+      <van-search
+        input-class="search-input"
+        value="{{ name }}"
+        shape="round"
+        background="#F2F2F2"
+        placeholder="请输入搜索关键词"
+        bind:change="searchChange"
+      />
+    </view>
+    <navigator url="/packageA/pages/add/index">
+      <van-button color="#FEFFFF" icon="plus" size="small" round type="info">新建</van-button>
+    </navigator>
+  </view>
+  <view class="container">
+    <view class="page-loading" wx:if="{{loading}}">
+      <van-loading color="#1985FF" type="spinner">加载中......</van-loading>
+    </view>
+    <view class="user-list flex-btw" wx:else>
+      <view class="user-item flex-clumn mb-30" wx:for="{{users}}" wx:key="index">
+        <view class="mb-20 flex-clumn" catchtap="editUser" data-name="{{item}}">
+          <view class="mb-20">
+            <image src="/images/avartar.png" />
+          </view>
+          <text class="username">{{item.name}}</text>
+        </view>
+        <van-button
+          round
+          color="{{item.status?'linear-gradient(270deg, #57A5FD 0%, #5AD3FC 100%)':'#9B9B9B'}}"
+          type="primary"
+          size="small"
+          data-id="{{item.id}}"
+          data-status="{{item.status}}"
+          bind:tap="changeStatus"
+        >{{item.status?"正常":"禁用"}}</van-button>
+      </view>
+    </view>
+  </view>
+</view>

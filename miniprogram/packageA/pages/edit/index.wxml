@@ -1,0 +1,12 @@
+<!--packageA/pages/edit/index.wxml-->
+<view class="edit-box">
+  <van-dialog id="van-dialog" />
+  <van-toast id="van-toast" />
+  <van-cell title="姓名" value="{{user.name}}" data-editname="0" is-link bindtap="goEditing"></van-cell>
+  <van-cell title="用户名" value="{{user.username}}"></van-cell>
+  <van-cell title="密码" is-link data-editname="1" bindtap="goEditing"></van-cell>
+  <van-cell title="权限" is-link data-editname="2" bindtap="goEditing"></van-cell>
+</view>
+<view wx:if="{{user.status===0}}" class="logout-box mt-40 flex-center" bindtap="deleteUser">
+  <text>删除用户</text>
+</view>

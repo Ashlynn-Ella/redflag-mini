@@ -1,0 +1,40 @@
+/* packageA/pages/admin/index.wxss */
+
+page {
+  background-color: #F2F2F2;
+}
+
+.saerch-box {
+  padding-right: 30rpx;
+}
+
+.search-input {
+  background-color: #fff;
+}
+
+.search {
+  flex: 1
+}
+
+.van-search__content--round {
+  background-color: #FEFFFF !important;
+}
+
+.van-button--info {
+  height: 68rpx !important;
+  color: #5AD3FC !important;
+  font-size: 24rpx;
+}
+
+.user-item {
+  width: 330rpx;
+  background: #FFFFFF;
+  box-shadow: 1px 2px 10px 3px rgba(0, 0, 2, 0.05);
+  border-radius: 12px;
+  padding: 40rpx 0 30rpx;
+}
+.user-item image{
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+}

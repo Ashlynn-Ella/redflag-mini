@@ -1,87 +1,161 @@
 <!--pages/control/index.wxml-->
 <view>
-  <van-tabs animated active="{{1}}" bind:change="tabChange">
+  <van-toast id="van-toast" />
+  <van-dialog id="van-dialog" />
+  <van-notify id="van-notify" />
+  <van-tabs animated active="{{0}}" bind:change="tabChange">
     <van-tab title="设备控制"></van-tab>
     <van-tab title="水肥控制"></van-tab>
   </van-tabs>
-  <view class="tab1-inner" wx:if="{{active===0}}">
-    <view class="select-box">
-      <van-dropdown-menu overlay="{{true}}" style="width:66%">
-        <van-dropdown-item value="{{ house }}" options="{{ houseList }}" />
-        <van-dropdown-item value="{{ away }}" options="{{ aways }}" />
-      </van-dropdown-menu>
-    </view>
-    <view class="control-device container flex-btw">
-      <view class="device-item flex-btw" bindtap="detailOpen">
-        <view class="left flex-clumn">
-          <image src="/images/data/lighting.png" />
-          <text>紧急停止</text>
-        </view>
-        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
-      </view>
-      <view class="device-item flex-btw">
-        <view class="left flex-clumn">
-          <image src="/images/data/lighting.png" />
-          <text>紧急停止</text>
-        </view>
-        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
-      </view>
-      <view class="device-item flex-btw">
-        <view class="left flex-clumn">
-          <image src="/images/data/lighting.png" />
-          <text>紧急停止</text>
-        </view>
-        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
-      </view>
-      <view class="device-item flex-btw">
-        <view class="left flex-clumn">
-          <image src="/images/data/lighting.png" />
-          <text>紧急停止</text>
-        </view>
-        <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
-      </view>
-    </view>
+  <view class="page-loading" wx:if="{{loading}}">
+    <van-loading color="#1985FF" type="spinner">加载中......</van-loading>
   </view>
-  <view class="tab2-inner container" wx:else>
-    <view class="banner-box flex-clumn">
-      <view class="mb-40">
-        <text>水肥一体化灌溉设备</text>
+  <view wx:else>
+    <view class="tab1-inner" wx:if="{{active===0}}">
+      <view class="select-box">
+        <van-dropdown-menu overlay="{{true}}" style="width:66%">
+          <van-dropdown-item value="{{ deviceId }}" options="{{ houseList }}" />
+          <van-dropdown-item
+            value="{{ CJ01_manuauto01 }}"
+            options="{{ aways }}"
+            bind:change="awayChange"
+          />
+        </van-dropdown-menu>
       </view>
-      <image src="/images/control/water.png" />
-      <view class="vul-box flex-btw">
-        <view class="vul-ph flex-clumn">
-          <view class="mb-30">
-            <text class="vul-blue">7</text>
+      <view class="control-device container flex-btw">
+        <view class="device-item flex-btw">
+          <view class="left flex-clumn" bindtap="detailOpen" data-id="{{'CJ01_emerstop01'}}">
+            <text class="{{CJ01_emerstop01?'':'close'}}">E-stop</text>
+            <text class="{{CJ01_emerstop01?'':'close'}}">{{!CJ01_emerstop01?'紧急停止':'复位'}}</text>
           </view>
-          <text>PH参数值</text>
+          <van-switch
+            checked="{{ CJ01_emerstop01 }}"
+            size="32rpx"
+            inactive-color="#ccc"
+            active-color="#ee0a24"
+            bind:change="stopChange"
+          />
         </view>
-        <view class="vul-ec flex-clumn">
-          <view class="mb-30">
-            <text class="vul-blue">0.0μs/cm</text>
+        <view class="device-item flex-btw">
+          <view class="left flex-clumn" bindtap="detailOpen" data-id="{{'CJ01_lighting01'}}">
+            <image wx:if="{{CJ01_lighting01}}" src="/images/data/lighting.png" />
+            <image wx:else src="/images/data/lighting01.png" />
+            <text class="{{CJ01_lighting01?'':'close'}}">照明灯</text>
           </view>
-          <text>EC参数值</text>
+           <van-switch
+              checked="{{ CJ01_lighting01 }}"
+              size="32rpx"
+              inactive-color="#ccc"
+              active-color="#1985FF"
+              bind:change="lightChange"
+              disabled="{{disabled}}"
+            />
+        </view>
+        <view class="device-item flex-btw">
+          <view class="left flex-clumn" bindtap="detailOpen" data-id="{{'CJ01_cyclefan01'}}">
+            <image wx:if="{{CJ01_cyclefan01}}" src="/images/data/cyclefan.png" />
+            <image wx:else src="/images/data/cyclefan01.png" />
+            <text class="{{CJ01_cyclefan01?'':'close'}}">环流风机</text>
+          </view>
+          <van-switch
+            checked="{{ CJ01_cyclefan01 }}"
+            size="32rpx"
+            inactive-color="#ccc"
+            active-color="#1985FF"
+            bind:change="cycleChange"
+            disabled="{{disabled}}"
+          />
+        </view>
+        <view class="device-item flex-btw">
+          <view class="left flex-clumn" bindtap="detailOpen" data-id="{{'CJ01_coolpump01'}}">
+            <image wx:if="{{CJ01_coolpump01}}" src="/images/data/coolpump.png" />
+            <image wx:else src="/images/data/coolpump01.png" />
+            <text class="{{CJ01_coolpump01?'':'close'}}">湿帘水泵</text>
+          </view>
+          <van-switch
+            checked="{{ CJ01_coolpump01 }}"
+            size="32rpx"
+            inactive-color="#ccc"
+            active-color="#1985FF"
+            bind:change="coolChange"
+            disabled="{{disabled}}"
+          />
         </view>
       </view>
     </view>
-    <view class="btn-box flex-btw mt-40">
-      <text>自动模式</text>
-      <van-switch checked="{{ checked }}" size="32rpx" active-color="#1985FF" />
+    <view class="tab2-inner container" wx:else>
+      <view class="banner-box flex-clumn">
+        <view class="mb-40 title">
+          <text>水肥一体化灌溉设备</text>
+          <view class="open-btn center" catchtap="onlineChange">
+            <image wx:if="{{open}}" src="/images/control/on.png" />
+            <image wx:else src="/images/control/off.png" />
+          </view>
+        </view>
+        <image src="/images/control/water.png" />
+        <view class="vul-box flex-btw">
+          <view class="vul-ph flex-clumn">
+            <view class="mb-30">
+              <text class="vul-blue">7</text>
+            </view>
+            <text>PH参数值</text>
+          </view>
+          <view class="vul-ec flex-clumn">
+            <view class="mb-30">
+              <text class="vul-blue">0.0μs/cm</text>
+            </view>
+            <text>EC参数值</text>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{open}}">
+        <view class="btn-box flex-btw mt-40">
+          <text>{{status?'自动模式':'手动模式'}}</text>
+          <van-switch
+            checked="{{ status }}"
+            size="32rpx"
+            bind:change="statusChange"
+            inactive-color="#ccc"
+            active-color="#1985FF"
+          />
+        </view>
+        <view class="input-list mt-40">
+          <van-cell title="氮肥">
+            <van-stepper
+              slot="right-icon"
+              disabled="{{wtDisabled}}"
+              value1="{{ 1 }}"
+              bind:change="onChange"
+            />
+          </van-cell>
+          <van-cell title="磷肥">
+            <van-stepper
+              slot="right-icon"
+              disabled="{{wtDisabled}}"
+              value2="{{ 1 }}"
+              bind:change="onChange"
+            />
+          </van-cell>
+          <van-cell title="钾肥">
+            <van-stepper
+              slot="right-icon"
+              disabled="{{wtDisabled}}"
+              value3="{{ 1 }}"
+              bind:change="onChange"
+            />
+          </van-cell>
+          <van-cell title="微量元素">
+            <van-stepper
+              slot="right-icon"
+              disabled="{{wtDisabled}}"
+              value4="{{ 1 }}"
+              bind:change="onChange"
+            />
+          </van-cell>
+        </view>
+        <view class="btn-wrapper mt-40">标准配比</view>
+      </view>
     </view>
-    <view class="input-list mt-40">
-      <van-cell title="氮肥">
-        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
-      </van-cell>
-      <van-cell title="磷肥">
-        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
-      </van-cell>
-      <van-cell title="钾肥">
-        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
-      </van-cell>
-      <van-cell title="微量元素">
-        <van-stepper slot="right-icon" value="{{ 1 }}" bind:change="onChange" />
-      </van-cell>
-    </view>
-    <view class="btn-wrapper mt-40">标准配比</view>
   </view>
   <view class="popup">
     <van-popup
@@ -94,13 +168,13 @@
     >
       <view class="popup-box">
         <view class="title mb-30">
-          <view class="mb-40">
-            <text class="title01">环流风机-01</text>
-          </view>
           <view class="mb-20">
+            <text class="title01">{{name}}</text>
+          </view>
+          <view class="mb-10">
             <text>定时：永不重复 - 时间 00：00 - 开启设备30分钟</text>
           </view>
-          <view class="mb-20">
+          <view class="mb-10">
             <text>策略：当空气温度持续5分钟大于10.00摄氏度时启动</text>
           </view>
         </view>

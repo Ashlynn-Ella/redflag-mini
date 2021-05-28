@@ -17,7 +17,6 @@ button::after {
   border: none;
 }
 
-
 page {
   background: #FEFEFE;
   display: flex;
@@ -26,13 +25,12 @@ page {
   box-sizing: border-box;
 }
 
-view,
-text,
-button {
+view, text, button {
   box-sizing: border-box;
 }
 
 /* 改变vant的样式 */
+
 .van-overlay {
   background-color: var(--overlay-background-color, rgba(0, 0, 0, .1)) !important;
 }
@@ -43,6 +41,7 @@ button {
 }
 
 /* 自定义全局样式 */
+
 .flex {
   display: flex;
   align-items: center;
@@ -54,6 +53,7 @@ button {
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .flex-btw-nowrap {
   display: flex;
   align-items: center;
@@ -73,8 +73,16 @@ button {
   align-items: center;
 }
 
+.flex-clumn-ftw {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* 字体颜色 */
-.vul-blue{
+
+.vul-blue {
   color: #1985FF;
 }
 
@@ -97,6 +105,7 @@ button {
 .mb-20 {
   margin-bottom: 20rpx;
 }
+
 .mb-40 {
   margin-bottom: 40rpx;
 }
@@ -105,6 +114,21 @@ button {
   margin-top: 40rpx;
 }
 
+.mt-50 {
+  margin-top: 50rpx;
+}
+
 .mt-60 {
   margin-top: 60rpx;
+}
+
+.page-loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.van-cell-text,.van-cell__title{
+  font-size: 28rpx !important;
 }

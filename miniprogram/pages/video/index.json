@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "mp-gallery": "weui-miniprogram/gallery/gallery",
+    "mp-video-swiper": "@miniprogram-component-plus/video-swiper",
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index"
+  },
+  "enablePullDownRefresh": false,
+  "navigationBarTitleText": "视频监控"
+}

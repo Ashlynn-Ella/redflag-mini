@@ -1,116 +1,7 @@
 // pages/data/index.js
 const app = getApp()
 import * as echarts from '../../components/ec-canvas/echarts';
-let chart = null
-function initChart(canvas, width, height, dpr) {
-  chart = echarts.init(canvas, null, {
-    width: width,
-    height: height,
-    devicePixelRatio: dpr // 像素
-  });
-  canvas.setChart(chart);
-
-  var option = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-      },
-      confine: true
-    },
-    legend: {
-      data: ['热度', '正面', '负面']
-    },
-    grid: {
-      left: 20,
-      right: 20,
-      bottom: 15,
-      top: 40,
-      containLabel: true
-    },
-    xAxis: [
-      {
-        type: 'value',
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        axisLabel: {
-          color: '#666'
-        }
-      }
-    ],
-    yAxis: [
-      {
-        type: 'category',
-        axisTick: { show: false },
-        data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        axisLabel: {
-          color: '#666'
-        }
-      }
-    ],
-    series: [
-      {
-        name: '热度',
-        type: 'bar',
-        label: {
-          normal: {
-            show: true,
-            position: 'inside'
-          }
-        },
-        data: [300, 270, 340, 344, 300, 320, 310],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#37a2da'
-          // }
-        }
-      },
-      {
-        name: '正面',
-        type: 'bar',
-        stack: '总量',
-        label: {
-          normal: {
-            show: true
-          }
-        },
-        data: [120, 102, 141, 174, 190, 250, 220],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#32c5e9'
-          // }
-        }
-      },
-      {
-        name: '负面',
-        type: 'bar',
-        stack: '总量',
-        label: {
-          normal: {
-            show: true,
-            position: 'left'
-          }
-        },
-        data: [-20, -32, -21, -34, -90, -130, -110],
-        itemStyle: {
-          // emphasis: {
-          //   color: '#67e0e3'
-          // }
-        }
-      }
-    ]
-  }
-  chart.setOption(option);
-  return chart;
-}
+import Notify from '@vant/weapp/notify/notify';
 Page({
 
   /**
@@ -118,31 +9,31 @@ Page({
    */
   data: {
     active: 0,
-    houseList: [
-      { text: '棚室1', value: 0 },
-      { text: '棚室2', value: 1 },
-    ],
-    propList: [
-      { text: '土壤温度', value: 0 }
-    ],
-    house: 0,
-    prop: 0,
+    houseList: [],
+    propList: [],
+    tabDevice: 'smart_01',
+    deviceId: 'smart_01',
+    deviceName: '红旗智慧农业控制器',
+    prop: 'CJ01_soiltemp01',
+    propName: '土壤温度',
+    productId: '20201015170538',
     show: false,
-    currentDate: new Date().getTime(),
-    minDate: new Date().getTime(),
-    formatter(type, value) {
-      if (type === 'year') {
-        return `${value}年`;
-      }
-      if (type === 'month') {
-        return `${value}月`;
-      }
-      return value;
-    },
     ec: {
-      onInit: initChart
+      lazyLoad: true
     },
-
+    canvasImage: '',
+    canvasShow: true,
+    maxDate: new Date().getTime(),
+    minDate: new Date(2020, 0, 1).getTime(),
+    defalutDate: '',
+    date: 10,
+    time: [],
+    vlaueList: [],
+    maxValue: '',
+    minValue: '',
+    avgValue: '',
+    multi: '',
+    loading: true
   },
   /**
    * 生命周期函数--监听页面加载
@@ -150,41 +41,369 @@ Page({
   onLoad: function (options) {
 
   },
-
-  onClose: function () {
-    this.setData({
-      show: false
-    })
-    this.selectComponent('#item').toggle(false);
-  },
-  confirm: function () {
-    this.setData({
-      show: false
-    })
-    this.selectComponent('#item').toggle(false);
-  },
-  dateOpen: function () {
-    this.setData({
-      show: true
-    })
-  },
-  tabChange(event) {
-    this.setData({
-      active: event.detail.index
-    })
-  },
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
+ * 生命周期函数--监听页面初次渲染完成
+ */
   onReady: function () {
-
+    this.initDevice()
+    this.initProps(this.data.deviceId)
+    this.getMulti()
+    this.initWebscokect()
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.initDevice()
+    this.initProps(this.data.deviceId)
+    this.getMulti()
+  },
 
+  onClose: function () {
+    this.setData({
+      show: false,
+      canvasShow: true
+    })
+    this.selectComponent('#item').toggle(false);
+    setTimeout(() => {
+      this.initHistory()
+    }, 500)
+  },
+  formatDate(date) {
+    date = new Date(date).getTime();
+    return date;
+  },
+  confirm: function (value) {
+    this.setData({
+      loading: true
+    })
+    const [start, end] = value.detail;
+    const days = (this.formatDate(end) - this.formatDate(start)) / (1000 * 24 * 3600) || 10
+    this.setData({
+      show: false,
+      canvasShow: true,
+      date: days,
+    })
+    this.selectComponent('#item').toggle(false)
+    setTimeout(() => {
+      this.initHistory()
+    }, 500)
+  },
+  dateOpen: function () {
+    const date = new Date().getTime()
+    const prveDate = date - 10 * 1000 * 24 * 3600
+    this.setData({
+      show: true,
+      canvasShow: false,
+      defalutDate: [prveDate, date]
+    })
+  },
+  tabChange(event) {
+    this.setData({
+      active: event.detail.index,
+      loading: true
+    })
+    if (event.detail.index === 1) {
+      setTimeout(() => {
+        this.initHistory()
+      }, 500)
+    }
+  },
+  dropOpen() {
+    this.setData({
+      canvasShow: false
+    })
+  },
+  dropClose() {
+    this.setData({
+      canvasShow: true,
+      loading: true
+    })
+    setTimeout(() => {
+      this.initHistory()
+    }, 500)
+  },
+  tabdeviceChange(value) {
+    this.initProps(value.detail)
+    const productId = this.data.houseList.filter(item => item.value === value.detail)[0].productId
+    this.setData({
+      tabDevice: value.detail,
+      productId
+    })
+    this.getMulti()
+    this.onSocketOpen()
+  },
+  async getMulti() {
+    this.setData({
+      loading: true
+    })
+    const url = `${app.globalData.baseUrl}/dashboard/_multi`
+    const param = {
+      dashboard: "device",
+      object: this.data.productId,
+      measurement: "properties",
+      dimension: "history",
+      params: { deviceId: `${this.data.tabDevice}`, history: 1 },
+    };
+    const res = await app.queryClient('POST', url, param)
+    const _multi = res.result
+    const list = []
+    _multi.forEach(item => {
+      const multiValue = item.data.value
+      const name = this.data.propList?.filter(prop => prop.value === multiValue.property)[0].text
+      const unit = this.data.propList?.filter(prop => prop.value === multiValue.property)[0].unit
+      const url = multiValue.value || multiValue.value === 0 ? `/images/data/${multiValue.property.slice(5, -2)}.png` : `/images/data/${multiValue.property.slice(5, -2)}01.png`
+      list.push({ ...multiValue, name, unit, url })
+    })
+    this.setData({
+      multi: list,
+      loading: false
+    })
+  },
+
+  save() {
+    const ecComponent = this.selectComponent('#mychart-dom-line');
+    // 先保存图片到临时的本地文件，然后存入系统相册
+    ecComponent.canvasToTempFilePath({
+      success: res => {
+        this.setData({
+          canvasImage: res.tempFilePath
+        })
+      },
+      fail: res => console.log(res)
+    });
+  },
+
+
+  async initDevice() {
+    const res = await app.queryAllDevice()
+    const list = []
+    res.data.forEach(item => {
+      const productId = item.productId
+      list.push({ text: item.name, value: item.id, productId })
+    })
+    this.setData({
+      houseList: list
+    })
+  },
+  async initProps(deviceId) {
+    const resProps = await app.queryProps(this.data.deviceId)
+    const propList = app.formatProps(resProps.metadata)
+    this.setData({
+      propList: propList,
+      productId: resProps.productId,
+      prop: propList[0].value
+    })
+  },
+  async initHistory() {
+
+    const url = `${app.globalData.baseUrl}/api/v1/device/${this.data.deviceId}/agg/AVG/${this.data.prop}/_query`
+    const data = await app.queryClient('POST', url,
+      {
+        interval: "1d",
+        from: `now-${this.data.date}d`,
+        to: "now",
+        query: {
+          pageSize: this.data.date,
+        }
+      })
+    const time = []
+    const vlaueList = []
+    data.result.forEach(item => {
+      time.push(item.time)
+      vlaueList.push(item[this.data.prop])
+    })
+    let maxValue = Math.max(...vlaueList)
+    let minValue = Math.min(...vlaueList) == 0 ? 0 : Math.min(...vlaueList.data)
+    let avgValue = (maxValue + minValue) / 2
+    this.setData({
+      time,
+      vlaueList,
+      maxValue: maxValue.toFixed(2),
+      minValue: minValue.toFixed(2),
+      avgValue: avgValue.toFixed(2)
+    })
+    this.setData({
+      loading: false
+    })
+    this.initChart()
+  },
+
+  deviceChange(value) {
+    this.initProps(value.detail)
+    this.setData({
+      deviceId: value.detail,
+      loading: true
+    })
+    setTimeout(() => {
+      this.initHistory()
+    }, 500)
+  },
+
+  propChange(value) {
+    const name = this.data.propList?.filter(item => item.value === value.detail)[0].text
+    console.log(name)
+    this.setData({
+      prop: value.detail,
+      propName: name,
+      loading: true
+    })
+    setTimeout(() => {
+      this.initHistory()
+    }, 500)
+  },
+
+  initChart: function () {
+    const ecComponent = this.selectComponent('#mychart-dom-line');
+    ecComponent.init(
+      (canvas, width, height, dpr) => {
+        const chart = echarts.init(canvas, null, {
+          width: width,
+          height: height,
+          devicePixelRatio: dpr // 像素
+        });
+        canvas.setChart(chart);
+        chart.setOption(this.getOption());
+        return chart;
+      }
+    )
+  },
+  getOption() {
+    return {
+      title: {
+        text: '测试下面legend的红色区域不应被裁剪',
+        left: 'center'
+      },
+      legend: {
+        left: 'center',
+        backgroundColor: 'red',
+        z: 100
+      },
+      color: '#57b5ff',
+      grid: {
+        containLabel: true
+      },
+      tooltip: {
+        show: true,
+        trigger: 'axis'
+      },
+      xAxis: {
+        type: 'category',
+        axisLabel: {
+          show: false,
+          interval: 5
+        },
+        boundaryGap: false,
+        data: this.data.time
+      },
+      yAxis: {
+        x: 'center',
+        type: 'value',
+        // name: options.ytip,
+        splitLine: {
+          lineStyle: {
+            type: 'dashed'
+          }
+        }
+      },
+      series: [
+        {
+          type: "line",
+          showSymbol: false,
+          data: this.data.vlaueList,
+          smooth: true,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+              offset: 0,
+              color: 'rgba(0, 221, 255)'
+            }, {
+              offset: 1,
+              color: 'rgba(77, 119, 255)'
+            }])
+          }
+        },
+      ],
+    };
+  },
+
+  //获取时实数据
+  initWebscokect() {
+    wx.getStorage({
+      key: 'X-Access-Token',
+      success: (res) => {
+        wx.connectSocket({
+          url: `wss://aiot.chinaredflag.cn/messaging/${res.data}`,
+          header: {
+            'content-type': 'application/json'
+          },
+          success: (res) => {
+            console.log(res)
+          }
+        })
+        this.onSocketOpen()
+      }
+    })
+  },
+  onSocketOpen() {
+    let socketMsgQueue = [{
+      type: "sub", //固定为sub
+      topic: `/device/${this.data.productId}/${this.data.deviceId}/message/property/report`,
+      id: `request-data`
+    }, {
+      type: "sub", //固定为sub
+      topic: `/rule-engine/device/alarm/${this.data.productId}/${this.data.deviceId}/1382229364221140992`,
+      "id": "request-notice01"
+    }]
+    wx.onSocketOpen(res => {
+      for (let i = 0; i < socketMsgQueue.length; i++) {
+        this.sendSocketMessage(JSON.stringify(socketMsgQueue[i]))
+      }
+    })
+    wx.onSocketMessage(res => {
+      const data = JSON.parse(res.data)
+      if (data.requestId === 'request-data') {
+        console.log(data)
+        let prop = data.payload.properties
+        const list = this.data.multi
+        list.forEach(item => {
+          if (item.property === Object.keys(prop)[0]) {
+            let value = prop[item.property]
+            let formatValue
+            let unit = item.unit ? item.unit : ''
+            if (typeof value === 'boolean') {
+              if (item.property === 'CJ01_manuauto01') {
+                formatValue = value ? '手动' : '自动'
+              } else {
+                formatValue = value ? '开' : '关'
+              }
+            } else {
+              value = value === 0 ? 0 : value.toFixed(1)
+              formatValue = (value + unit)
+            }
+            item.formatValue = formatValue
+          }
+        })
+        this.setData({
+          multi: list,
+          loading: false
+        })
+      } else if (data.requestId === 'request-notice01') {
+        const res = data.payload
+        Notify({
+          type: 'danger',
+          message: `${res.productName}：${res.alarmName}`,
+          duration: 5000,
+          top: 44
+        })
+      }
+    })
+  },
+  sendSocketMessage(msg) {
+    wx.sendSocketMessage({
+      data: msg
+    })
   },
 
   /**
@@ -198,16 +417,16 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    setTimeout(() => {
-      wx.stopPullDownRefresh()
-    }, 100)
+    this.initDevice()
+    this.initProps(this.data.deviceId)
+    this.initHistory()
+    wx.stopPullDownRefresh()
   },
 
   /**

@@ -1,11 +1,25 @@
 // pages/user/index.js
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-   
+    user: '',
+    loading:true
+  },
+  async getUser() {
+    this.setData({
+      loading:true
+    })
+    const detail = await app.queryClient('GET', `${app.globalData.baseUrl}/user/detail`)
+    const user = await app.queryClient('GET', `${app.globalData.baseUrl}/authorize/me`)
+    const id = user.result.dimensions[1].id
+    this.setData({
+      user: { ...detail.result, id },
+      loading:false
+    })
   },
 
   /**
@@ -19,14 +33,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.getUser()
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getUser()
   },
 
   /**
@@ -47,7 +61,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.getUser()
+    wx.stopPullDownRefresh()
   },
 
   /**

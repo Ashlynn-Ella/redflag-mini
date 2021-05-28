@@ -1,0 +1,77 @@
+<!--packageA/pages/message/index.wxml-->
+<view class="message-box">
+  <van-notify id="van-notify" />
+  <van-toast id="van-toast" />
+  <van-tabs animated active="{{0}}" bind:change="tabChange">
+    <van-tab title="系统消息"></van-tab>
+    <van-tab title="预警消息"></van-tab>
+    <van-tab title="报警消息"></van-tab>
+  </van-tabs>
+  <view class="page-loading" wx:if="{{loading}}">
+    <van-loading color="#1985FF" type="spinner">加载中......</van-loading>
+  </view>
+  <view wx:else>
+    <view class="select-box flex-btw">
+      <van-dropdown-menu style="width:50%" overlay="{{true}}">
+        <van-dropdown-item
+          value="{{ deviceId }}"
+          options="{{ houseList }}"
+          bind:change="sysChange"
+        />
+      </van-dropdown-menu>
+      <van-dropdown-menu style="width:50%">
+        <van-dropdown-item title="日期选择" bind:close="onClose" bind:open="dateOpen" id="item"></van-dropdown-item>
+      </van-dropdown-menu>
+    </view>
+    <view class="tab01-inner" wx:if="{{active === 0}}">
+      <view class="mes-list container">
+        <view class="mes-item flex-btw-nowrap mb-20" wx:for="{{systemlogs}}" wx:key="index">
+          <view class="mes-hd">
+            <view class="mb-10">
+              <text>{{item.content}}</text>
+            </view>
+            <text>设备{{item.name}}</text>
+          </view>
+          <text>{{item.date}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="tab02-inner" wx:elif="{{active === 1}}">
+      <view class="mes-list container">
+        <view class="mes-item flex-btw-nowrap mb-20" wx:for="{{alertlogs}}" wx:key="index">
+          <view class="mes-hd">
+            <view class="mb-10">
+              <text>{{item.info}}</text>
+            </view>
+            <text>{{item.name}}</text>
+          </view>
+          <text>{{item.date}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="tab03-inner" wx:else>
+      <view class="mes-list container">
+        <view class="mes-item flex-btw-nowrap mb-20" wx:for="{{event}}" wx:key="index">
+          <view class="mes-hd">
+            <view class="mb-10">
+              <text>{{item.name}}</text>
+            </view>
+            <text>{{item.content}}</text>
+          </view>
+          <text style="text-align:right">{{item.date}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <van-calendar
+    color="#1985FF"
+    show="{{ show }}"
+    type="range"
+    bind:close="onClose"
+    bind:confirm="confirm"
+    default-date="{{defalutDate}}"
+    max-date="{{ maxDate }}"
+    min-date="{{ minDate }}"
+  />
+</view>

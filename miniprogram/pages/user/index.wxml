@@ -1,2 +1,40 @@
 <!--pages/user/index.wxml-->
-<text>pages/user/index.wxml</text>
+<view class="page-loading" wx:if="{{loading}}">
+  <van-loading color="#1985FF" type="spinner">加载中......</van-loading>
+</view>
+<view class="user-box" wx:else>
+  <view class="avartar-box flex-clumn">
+    <view class="img-box mb-30">
+      <image src="{{user.avatar?user.avatar:'/images/avartar.png'}}" />
+    </view>
+    <view class="flex-clumn">
+      <text class="mb-10" style="font-size:24rpx">{{user.id}}</text>
+      <text>{{user.name}}</text>
+    </view>
+  </view>
+  <view class="container">
+    <view class="user-list">
+      <navigator url="/packageA/pages/my/index">
+        <van-cell icon="apps-o" is-link>
+          <view slot="title">
+            <view url="/packageA/pages/my/index" class="van-cell-text">我的资料</view>
+          </view>
+        </van-cell>
+      </navigator>
+      <navigator url="/packageA/pages/message/index">
+        <van-cell icon="chat-o" is-link>
+          <view slot="title">
+            <view class="van-cell-text">消息通知</view>
+          </view>
+        </van-cell>
+      </navigator>
+      <navigator url="/packageA/pages/admin/index">
+        <van-cell icon="friends-o" is-link>
+          <view slot="title">
+            <view class="van-cell-text">用户管理</view>
+          </view>
+        </van-cell>
+      </navigator>
+    </view>
+  </view>
+</view>

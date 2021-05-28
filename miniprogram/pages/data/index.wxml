@@ -1,91 +1,106 @@
 <!-- pages/data/index.wxml -->
+
 <view class="data-container">
+  <van-notify id="van-notify" />
   <view class="tab-box">
     <van-tabs animated bind:change="tabChange">
       <van-tab title="实时数据"></van-tab>
-      <van-tab title="历史数据"></van-tab>
+      <van-tab title="历史数据">
+        <view class="select-box flex-btw">
+          <van-dropdown-menu overlay="{{true}}" style="width:66%">
+            <van-dropdown-item
+              value="{{ deviceId }}"
+              options="{{ houseList }}"
+              bind:change="deviceChange"
+              bind:open="dropOpen"
+              bind:close="dropClose"
+            />
+            <van-dropdown-item
+              value="{{ prop }}"
+              options="{{ propList }}"
+              bind:open="dropOpen"
+              bind:close="dropClose"
+              bind:change="propChange"
+            />
+          </van-dropdown-menu>
+          <van-dropdown-menu style="width:33%">
+            <van-dropdown-item title="时间区间" bind:close="onClose" bind:open="dateOpen" id="item"></van-dropdown-item>
+          </van-dropdown-menu>
+        </view>
+      </van-tab>
     </van-tabs>
   </view>
-  <view class="tab1-inner" wx:if="{{active === 0}}">
-    <view class="select-box">
-      <van-dropdown-menu>
-        <van-dropdown-item value="{{ house }}" options="{{ houseList }}" />
-      </van-dropdown-menu>
-    </view>
-    <view class="flex-btw props-list container">
-      <view class="props-item mb-30 flex-clumn">
-        <image src="/images/data/soilelec.png" />
-        <text class="vul mb-20 mt-40">0.0μs/cm</text>
-        <text>土壤电导率</text>
-      </view>
-      <view class="props-item mb-30 flex-clumn">
-        <image src="/images/data/soiltemp.png" />
-        <text class="vul mb-20 mt-40">0.0μs/cm</text>
-        <text>土壤电导率</text>
-      </view>
-      <view class="props-item mb-30 flex-clumn">
-        <image src="/images/data/soilelec.png" />
-        <text class="vul mb-20 mt-40">0.0μs/cm</text>
-        <text>土壤电导率</text>
-      </view>
-    </view>
+  <van-notify id="van-notify" />
+  <view class="page-loading" wx:if="{{loading}}">
+    <van-loading color="#1985FF" type="spinner">加载中......</van-loading>
   </view>
-  <view class="tab2-inner" wx:else>
-    <view class="select-box flex-btw">
-      <van-dropdown-menu overlay="{{true}}" style="width:66%">
-        <van-dropdown-item value="{{ house }}" options="{{ houseList }}" />
-        <van-dropdown-item value="{{ prop }}" options="{{ propList }}" />
-      </van-dropdown-menu>
-      <van-dropdown-menu style="width:33%">
-        <van-dropdown-item title="时间区间" bind:close="onClose" bind:open="dateOpen" id="item"></van-dropdown-item>
-      </van-dropdown-menu>
+  <view wx:else>
+    <view class="tab1-inner" wx:if="{{active === 0}}">
+      <view class="select-box">
+        <van-dropdown-menu>
+          <van-dropdown-item
+            value="{{ tabDevice }}"
+            options="{{ houseList }}"
+            bind:change="tabdeviceChange"
+          />
+        </van-dropdown-menu>
+      </view>
+      <view class="flex-btw props-list container">
+        <view class="props-item mb-30 flex-clumn" wx:for="{{multi}}" wx:key="url">
+          <image src="{{item.url}}" />
+          <text
+            class="vul mb-20 mt-40 {{item.value || item.value ===0 ?'':'close'}}"
+          >{{item.formatValue}}</text>
+          <text class="{{item.value || item.value ===0?'':'close'}}">{{item.name}}</text>
+        </view>
+      </view>
     </view>
-    <view class="echart">
-      <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-    </view>
-    <view class="container">
-      <view class="panel container">
-        <view class="echarts-title">红旗智慧农业控制器 土壤温度 10天内日走势图</view>
-        <van-divider />
-        <view class="vul-list flex-btw-nowrap">
-          <view class="vul-item flex-clumn">
-            <text class="num">0.00</text>
-            <text>最小值</text>
-            <text>2021-05-10</text>
+    <view class="tab2-inner" wx:else>
+      <view class="echart">
+        <ec-canvas
+          wx:if="{{canvasShow}}"
+          id="mychart-dom-line"
+          canvas-id="mychart-line"
+          ec="{{ ec }}"
+        ></ec-canvas>
+        <image wx:else src="{{canvasImage}}" />
+      </view>
+      <view class="container">
+        <view class="panel container">
+          <view class="echarts-title flex-center">
+            <view class="round"></view>
+            <view>{{deviceName}} {{propName}} {{date}}天内日走势图</view>
           </view>
-          <view class="vul-item flex-clumn">
-            <text class="num">196.58</text>
-            <text>最小值</text>
-            <text>2021-05-10</text>
-          </view>
-          <view class="vul-item flex-clumn">
-            <text class="num">1916.68</text>
-            <text>最小值</text>
-            <text>2021-05-10</text>
+          <van-divider />
+          <view class="vul-list flex-btw-nowrap">
+            <view class="vul-item flex-clumn">
+              <text class="num">{{minValue}}</text>
+              <text>最小值</text>
+              <text>2021-05-10</text>
+            </view>
+            <view class="vul-item flex-clumn">
+              <text class="num">{{avgValue}}</text>
+              <text>平均值</text>
+              <text>2021-05-10</text>
+            </view>
+            <view class="vul-item flex-clumn">
+              <text class="num">{{maxValue}}</text>
+              <text>最大值</text>
+              <text>2021-05-10</text>
+            </view>
           </view>
         </view>
       </view>
     </view>
   </view>
-
-  <van-popup
+  <van-calendar
+    color="#1985FF"
     show="{{ show }}"
-    round
-    overlay="{{false}}"
-    position="bottom"
-    custom-style="height: 30%"
+    type="range"
     bind:close="onClose"
-  >
-    <view class="mt-30 pick-time-box">
-      <van-datetime-picker
-        bind:confirm="confirm"
-        bind:cancel="onClose"
-        type="date"
-        value="{{ currentDate }}"
-        bind:input="onInput"
-        min-date="{{ minDate }}"
-        formatter="{{ formatter }}"
-      />
-    </view>
-  </van-popup>
+    bind:confirm="confirm"
+    default-date="{{defalutDate}}"
+    max-date="{{ maxDate }}"
+    min-date="{{ minDate }}"
+  />
 </view>

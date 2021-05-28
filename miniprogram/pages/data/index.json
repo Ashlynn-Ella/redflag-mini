@@ -7,6 +7,9 @@
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-popup": "@vant/weapp/popup/index",
     "ec-canvas": "../../components/ec-canvas/ec-canvas",
-    "van-divider": "@vant/weapp/divider/index"
+    "van-divider": "@vant/weapp/divider/index",
+    "van-calendar": "@vant/weapp/calendar/index",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-notify": "@vant/weapp/notify/index"
   }
 }

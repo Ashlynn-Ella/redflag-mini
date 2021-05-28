@@ -10,6 +10,8 @@
   "keywords": [],
   "description": "",
   "dependencies": {
-    "@vant/weapp": "^1.6.8"
+    "@miniprogram-component-plus/video-swiper": "^1.0.1",
+    "@vant/weapp": "^1.6.8",
+    "dayjs": "^1.10.4"
   }
 }

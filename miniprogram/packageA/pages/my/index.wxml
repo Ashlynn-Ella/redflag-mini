@@ -1,0 +1,13 @@
+<!--packageA/pages/my/index.wxml-->
+<view class="my-box">
+  <van-toast id="van-toast" />
+  <van-cell title="头像" class="avartar">
+    <image slot="right-icon" src="{{user.avatar?user.avatar:'/images/avartar.png'}}" />
+  </van-cell>
+  <van-cell title="姓名" is-link data-editname="0" bindtap="goEditing"></van-cell>
+  <van-cell title="密码" is-link data-editname="1" bindtap="goEditing"></van-cell>
+  <van-cell title="营业执照" is-link></van-cell>
+</view>
+<view class="logout-box mt-40 flex-center" bind:tap="logout">
+  <text>退出登录</text>
+</view>

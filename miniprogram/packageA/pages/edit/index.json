@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-toast": "@vant/weapp/toast/index",
+    "van-dialog": "@vant/weapp/dialog/index"
+  },
+  "navigationBarBackgroundColor": "#F2F2F2",
+  "navigationBarTitleText": "编辑用户",
+  "navigationBarTextStyle": "black"
+}

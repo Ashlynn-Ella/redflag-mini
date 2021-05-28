@@ -8,6 +8,7 @@
   border-radius: 12px;
 }
 
+
 .props-item image {
   width: 55rpx;
   height: 55rpx;
@@ -23,9 +24,12 @@
 }
 
 .echart {
+  width: 100vw;
+  height: 700rpx;
+}
+.echart image{
   width: 100%;
-  height: 712rpx;
-  z-index: 9;
+  height: 100%;
 }
 
 .panel {
@@ -40,19 +44,14 @@
   width: 100%;
   font-size: 28rpx;
   text-align: center;
-  position: relative;
 }
 
-.echarts-title::before {
-  content: '';
-  position: absolute;
+.round {
   width: 10rpx;
   height: 10rpx;
   background: #57A5FD;
   border-radius: 50%;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+  margin-right: 20rpx;
 }
 
 .vul-item text.num {
@@ -66,4 +65,17 @@
   line-height: 32rpx;
   text-align: center;
   margin-bottom: 10rpx;
+}
+
+.van-dropdown-item--down {
+  z-index: 100;
+  background-color: #FFFFFF;
+}
+
+#mychart-dom-bar {
+  z-index: 0 !important;
+}
+
+.props-list .props-item .close{
+  color: #ccc;
 }

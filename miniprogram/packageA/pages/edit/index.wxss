@@ -1,0 +1,13 @@
+/* packageA/pages/edit/index.wxss */
+
+page {
+  background-color: #F2F2F2;
+}
+
+.logout-box{
+  width: 100%;
+  height: 100rpx;
+  font-size: 30rpx;
+  background-color: #fff;
+  color: #F50000;
+}

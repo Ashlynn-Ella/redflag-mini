@@ -1,19 +1,37 @@
 <!-- index.wxml -->
-<view>
+<view class="page-loading" wx:if="{{loading}}">
+  <van-loading color="#1985FF" type="spinner">加载中......</van-loading>
+</view>
+<view wx:else>
+  <van-notify id="van-notify" />
   <view class="view-img">
     <view class="title">视频监控</view>
-    <view class="video-box"></view>
+    <navigator url="/pages/video/index">
+      <view class="video-box">
+        <view class="play">
+          <image src="/images/index/play.png" />
+        </view>
+        <image src="/images/index/video.png" />
+      </view>
+    </navigator>
   </view>
   <view class="tab-box" style="width:100%">
     <van-tabs animated active="{{active}}">
       <van-tab title="时实气象">
         <view class="container tab1 flex-btw">
-          <view class="tab1-item flex-center mb-30" wx:for="{{ wetherData }}" wx:key="index">
+          <view class="tab1-item flex mb-30" wx:for="{{ multi }}" wx:key="index">
             <view class="img-box flex-clumn mr-40">
-              <text class="roomtemp mb-10">{{item.text}}</text>
-              <image src="{{item.imgUrl}}" />
+              <text class="roomtemp mb-10">{{item.name}}</text>
+              <image src="{{item.url}}" />
             </view>
-            <text class="num">30℃</text>
+            <text class="num">{{item.formatValue}}</text>
+          </view>
+          <view class="tab1-item flex mb-30">
+            <view class="img-box flex-clumn mr-40">
+              <text class="roomtemp mb-10">实况</text>
+              <image src="/images/index/tem.png" />
+            </view>
+            <text class="num">晴</text>
           </view>
         </view>
       </van-tab>

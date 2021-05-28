@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "van-field": "@vant/weapp/field/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-button": "@vant/weapp/button/index"
+  },
+  "navigationBarBackgroundColor": "#F2F2F2",
+  "navigationBarTitleText": "新建用户",
+  "navigationBarTextStyle": "black"
+}

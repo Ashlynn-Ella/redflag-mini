@@ -15,7 +15,7 @@ Page({
     deviceId: 'smart_01',
     deviceName: '红旗智慧农业控制器',
     prop: 'CJ01_soiltemp01',
-    propName: '土壤温度',
+    propName: '',
     productId: '20201015170538',
     show: false,
     ec: {
@@ -33,7 +33,9 @@ Page({
     minValue: '',
     avgValue: '',
     multi: '',
-    loading: true
+    loading: true,
+    minTime:'',
+    maxTime:''
   },
   /**
    * 生命周期函数--监听页面加载
@@ -45,18 +47,15 @@ Page({
  * 生命周期函数--监听页面初次渲染完成
  */
   onReady: function () {
-    this.initDevice()
-    this.initProps(this.data.deviceId)
-    this.getMulti()
     this.initWebscokect()
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    this.initDevice()
-    this.initProps(this.data.deviceId)
+  onShow:async function () {
+    await this.initDevice()
+    await this.initProps(this.data.deviceId)
     this.getMulti()
   },
 
@@ -184,20 +183,21 @@ Page({
       list.push({ text: item.name, value: item.id, productId })
     })
     this.setData({
-      houseList: list
+      houseList: list,
     })
   },
   async initProps(deviceId) {
     const resProps = await app.queryProps(this.data.deviceId)
     const propList = app.formatProps(resProps.metadata)
+    const propName = propList[0].text
     this.setData({
       propList: propList,
       productId: resProps.productId,
-      prop: propList[0].value
+      prop: propList[0].value,
+      propName
     })
   },
   async initHistory() {
-
     const url = `${app.globalData.baseUrl}/api/v1/device/${this.data.deviceId}/agg/AVG/${this.data.prop}/_query`
     const data = await app.queryClient('POST', url,
       {
@@ -217,12 +217,20 @@ Page({
     let maxValue = Math.max(...vlaueList)
     let minValue = Math.min(...vlaueList) == 0 ? 0 : Math.min(...vlaueList.data)
     let avgValue = (maxValue + minValue) / 2
+    let minTime = data.result.filter(
+      (item) => item[this.data.prop] == minValue
+    )[0].time;
+    let maxTime = data.result.filter(
+      (item) => item[this.data.prop] == maxValue
+    )[0].time;
     this.setData({
       time,
       vlaueList,
       maxValue: maxValue.toFixed(2),
       minValue: minValue.toFixed(2),
-      avgValue: avgValue.toFixed(2)
+      avgValue: avgValue.toFixed(2),
+      minTime,
+      maxTime
     })
     this.setData({
       loading: false
@@ -232,9 +240,11 @@ Page({
 
   deviceChange(value) {
     this.initProps(value.detail)
+    const name = this.data.houseList?.filter(item => item.value === value.detail)[0].text
     this.setData({
       deviceId: value.detail,
-      loading: true
+      loading: true,
+      deviceName:name
     })
     setTimeout(() => {
       this.initHistory()
@@ -243,7 +253,6 @@ Page({
 
   propChange(value) {
     const name = this.data.propList?.filter(item => item.value === value.detail)[0].text
-    console.log(name)
     this.setData({
       prop: value.detail,
       propName: name,
@@ -363,9 +372,8 @@ Page({
     })
     wx.onSocketMessage(res => {
       const data = JSON.parse(res.data)
-      if (data.requestId === 'request-data') {
-        console.log(data)
-        let prop = data.payload.properties
+      if (data.requestId === 'request-data') {       
+        let prop = data.payload.properties      
         const list = this.data.multi
         list.forEach(item => {
           if (item.property === Object.keys(prop)[0]) {
@@ -379,7 +387,7 @@ Page({
                 formatValue = value ? '开' : '关'
               }
             } else {
-              value = value === 0 ? 0 : value.toFixed(1)
+              value = value === 0 ? 0 :typeof value === 'string'?value: value.toFixed(1)
               formatValue = (value + unit)
             }
             item.formatValue = formatValue

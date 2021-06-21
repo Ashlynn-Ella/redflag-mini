@@ -66,7 +66,7 @@
         <image wx:else src="{{canvasImage}}" />
       </view>
       <view class="container">
-        <view class="panel container">
+        <view class="panel">
           <view class="echarts-title flex-center">
             <view class="round"></view>
             <view>{{deviceName}} {{propName}} {{date}}天内日走势图</view>
@@ -76,17 +76,16 @@
             <view class="vul-item flex-clumn">
               <text class="num">{{minValue}}</text>
               <text>最小值</text>
-              <text>2021-05-10</text>
+              <text>{{minTime}}</text>
             </view>
             <view class="vul-item flex-clumn">
               <text class="num">{{avgValue}}</text>
               <text>平均值</text>
-              <text>2021-05-10</text>
             </view>
             <view class="vul-item flex-clumn">
               <text class="num">{{maxValue}}</text>
               <text>最大值</text>
-              <text>2021-05-10</text>
+              <text>{{maxTime}}</text>
             </view>
           </view>
         </view>

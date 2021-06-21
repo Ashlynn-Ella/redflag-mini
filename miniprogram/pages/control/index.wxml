@@ -19,6 +19,7 @@
             value="{{ CJ01_manuauto01 }}"
             options="{{ aways }}"
             bind:change="awayChange"
+            disabled="{{autoDisabled}}"
           />
         </van-dropdown-menu>
       </view>

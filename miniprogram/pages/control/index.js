@@ -106,7 +106,6 @@ Page({
 
   //设备操作
   stopChange(value) {
-    console.log(value.detail)
     Dialog({
       title: '提示',
       message: `确定${!this.data.CJ01_emerstop01 ? '紧急停止' : '复位'}设备吗？`,
@@ -204,24 +203,27 @@ Page({
         [propId]: value
       }
     );
-    if (results.code === 'success') {
-      Toast.success('操作成功')
+    if (results.code === 'success') {      
       if (propId === 'CJ01_emerstop01') {
-        console.log(results)
         if (results.result[0].code === 1) {
+          Toast.success('操作成功')
+          this.getStatus()
           this.setData({
             disabled: value,
             autoDisabled: value,
-            [propId]: !value
+            [propId]: value
           })
+
         } else {
           Toast.fail('操作失败')
         }
       } else if (propId === 'CJ01_manuauto01') {
+        Toast.success('操作成功')
         this.setData({
           disabled: !value
         })
       } else {
+        Toast.success('操作成功')
         const res = results.result[0];
         value = res[propId];
         this.setData({
